@@ -16,7 +16,7 @@ var moment = require("moment");
 
     var queryUrl = "https://rest.bandsintown.com/artists/" + band + "/events?app_id=codingbootcamp";
 
-    function getConcert() {
+    function getConcert(band) {
         request(queryUrl, function (error, response, body) {
             if (!error && response.statusCode === 200) {
             var result  =  JSON.parse(body)[0];
