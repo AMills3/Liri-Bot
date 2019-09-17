@@ -7,27 +7,22 @@ var keys = require('./keys.js');
 var query = process.argv[2];
 var option = process.argv[3];
 
-var Twitter = require("twitter");
+var Concert = require("concert");
 var Spotify = require("node-spotify-api");
 var request = require("request");
+var moment = require("moment");
 
-// Twitter function
+// Concert function
 
-    var client = new Twitter(keys.twitter);
-    var params = {
-    screen_name: "VancityReynolds",
-    count: 20
-    };
+    var queryUrl = "https://rest.bandsintown.com/artists/" + band + "/events?app_id=codingbootcamp";
 
-    function myTweets() {
-        client.get("statuses/user_timeline", params, function(error, tweets, response) {
-            if (!error) {
-                for (i = 0; i < tweets.length; i++) {
-                    console.log(tweets[i].created_at);
-                    console.log(tweets[i].text);
-                }
-            } else {
-                console.log(error);
+    function getConcert() {
+        request(queryUrl, function (error, response, body) {
+            if (!error && response.statusCode === 200) {
+            var result  =  JSON.parse(body)[0];
+            console.log("Venue name " + result.venue.name);
+            console.log("Venue location " + result.venue.city);
+            console.log("Date of Event " +  moment(result.datetime).format("MM/DD/YYYY"));
             }
         });
     }
@@ -73,5 +68,18 @@ var request = require("request");
                     console.log("Plot of the movie: " + omdb.Plot);
                     console.log("Actors in the movie: " + omdb.Actors);
                 }
+            });
+        }
+
+// Read file function
+
+        function readFile() {
+            fs.readFile("random.txt", "utf-8", function(error, data) {
+                if (error) {
+                    return console.log(error);
+                }
+                
+                var dataInfo = data.split(" , ");
+                console.log(dataInfo);
             });
         }
