@@ -12,6 +12,21 @@ var Spotify = require("node-spotify-api");
 var request = require("request");
 var moment = require("moment");
 
+switch (query) {
+    case "concert-this":
+        getConcert();
+        break;
+    case 'spotify-this-song':
+        getSpotify(option);
+        break;
+    case 'movie-this':
+        getOmdb(option);
+        break;
+    case 'do-what-it-says':
+        random();
+        break;
+}
+
 // Concert function
 
     var queryUrl = "https://rest.bandsintown.com/artists/" + band + "/events?app_id=codingbootcamp";
